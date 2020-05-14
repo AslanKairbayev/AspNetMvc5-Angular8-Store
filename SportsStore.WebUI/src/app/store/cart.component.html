@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="navbar-brand">
+            <span class="hidden-xs">SPORTS STORE</span>
+            <div class="visible-xs">SPORTS</div>
+            <div class="visible-xs">STORE</div>
+        </div>
+        <div class="navbar-right hidden-xs">
+            <a class="btn btn-default navbar-btn" routerLink="/cart">Checkout</a>
+        </div>
+        <div class="navbar-right visible-xs">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+        </div>
+        <div class="navbar-text navbar-right">
+            <b>Your cart: </b>
+            <span>{{cart.totalQuan()}}</span> item(s),
+            <span>{{cart.totalSum() | currency}}</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Your cart</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Quantity</th>
+                        <th>Item</th>
+                        <th class="text-right">Price</th>
+                        <th class="text-right">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let line of cart.lines()">
+                    <tr>
+                        <td class="text-center">{{line?.Quantity}}</td>
+                        <td class="text-left">{{line.Product?.Name}}</td>
+                        <td class="text-right">{{line.Product?.Price | currency}}</td>
+                        <td class="text-right">{{line?.Quantity * line.Product?.Price | currency}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" (click)="removeFromCart(line.Product)">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right">Total:</td>
+                        <td class="text-right">{{cart.totalSum() | currency}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="text-center">
+                <button class="btn btn-default" routerLink="/home">Continue shopping</button>
+                <button class="btn btn-primary" routerLink="/checkout">Checkout now</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

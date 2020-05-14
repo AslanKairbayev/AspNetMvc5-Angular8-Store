@@ -1,0 +1,55 @@
+﻿
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-brand">
+        <span class="hidden-xs">SPORTS STORE</span>
+        <div class="visible-xs">SPORTS</div>
+        <div class="visible-xs">STORE</div>
+    </div>
+    <div class="navbar-right hidden-xs">
+        <a class="btn btn-default navbar-btn" routerLink="/cart">Checkout</a>
+    </div>
+    <div class="navbar-right visible-xs">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+    </div>
+    <div class="navbar-text navbar-right">
+        <b>Your cart: </b>
+        <span>{{cart.totalQuan()}}</span> item(s),
+        <span>{{cart.totalSum() | currency}}</span>
+    </div>
+</div>
+<div class="visible-xs">
+    Navigation-horizontal
+</div>
+<div class="row panel">
+    <div class="col-sm-3 hidden-xs">
+        <button (click)="loadList()" class="btn btn-block btn-default btn-lg" [class.btn-primary]="'all' == model.CurrentCategory">Home</button>
+        <button *ngFor="let category of categories"
+                (click)="loadList(category)" class="btn btn-block btn-default btn-lg" [class.btn-primary]="category == model.CurrentCategory">
+            {{category}}
+        </button>
+        <br />
+        <br />
+        <button class="btn btn-block btn-danger btn-lg" routerLink="/admin">Admin</button>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+        <div *ngFor="let product of model.Products">
+            <div class="well">
+                <h3>
+                    <strong>{{product?.Name}}</strong>
+                    <span class="pull-right label label-primary">{{product?.Price | currency}}</span>
+                </h3>
+                <div class="pull-right">
+                    <input type="submit" class="btn btn-success" value="Add to cart" (click)="addItemToCart(product)" />
+                </div>
+                <span class="lead">{{product?.Description}}</span>
+            </div>
+        </div>
+
+        <div class="btn-group pull-right" *ngIf="totalPages != 1">
+            <button *ngFor="let page of totalPages"
+                    (click)="loadList(model.CurrentCategory, page)" class="btn btn-default" [class.btn-primary]="page == model.PagingInfo.CurrentPage">
+                {{page}}
+            </button>
+        </div>
+    </div>
+</div>
